@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARCH Interior Design Studios | Luxury Interiors Chennai</title>
+  <meta name="description" content="ARCH Interior Design Studios – Crafting Spaces Beyond Imagination. Luxury interior design, villa design, modular kitchens & turnkey projects in Chennai, India." />
+  <meta name="keywords" content="interior design Chennai, luxury interiors, villa design Chennai, modular kitchen, office interiors, ARCH Interior Design Studios" />
+  <meta name="author" content="ARCH Interior Design Studios" />
+  <meta property="og:title" content="ARCH Interior Design Studios | Luxury Interiors Chennai" />
+  <meta property="og:description" content="Crafting Spaces Beyond Imagination. Premium interior design in Chennai." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://archinteriors.in" />
+  <link rel="canonical" href="https://archinteriors.in" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "ARCH Interior Design Studios",
+    "image": "",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "13/1 Jan John Mohammed Street, Border Thottam, Anna Salai, Triplicane",
+      "addressLocality": "Chennai",
+      "postalCode": "600002",
+      "addressCountry": "IN"
+    },
+    "telephone": "+917010310540",
+    "url": "https://archinteriors.in",
+    "description": "Luxury interior design studio in Chennai specializing in residential, commercial, and villa interiors."
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Lenis -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --ivory: #F8F6F2;
+      --beige: #E9E0D4;
+      --gold: #C7A46A;
+      --gold-light: #E2C48A;
+      --gold-dark: #9C7A45;
+      --charcoal: #2C2C2C;
+      --mid: #6B6460;
+      --white: #FFFFFF;
+      --ff-display: 'Cormorant Garamond', Georgia, serif;
+      --ff-body: 'Inter', system-ui, sans-serif;
+      --ff-accent: 'Playfair Display', Georgia, serif;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    html { scroll-behavior: auto; }
+    body {
+      background: var(--ivory);
+      color: var(--charcoal);
+      font-family: var(--ff-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
+    }
+    body.loaded { cursor: none; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    button { border: none; background: none; cursor: none; font-family: inherit; }
+
+    /* ===== CUSTOM CURSOR ===== */
+    #cursor {
+      position: fixed; top: 0; left: 0; z-index: 9999;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+    }
+    .cursor-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold);
+      position: absolute;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, opacity 0.2s;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      position: absolute;
+      transform: translate(-50%, -50%);
+      transition: width 0.35s var(--ease-out), height 0.35s var(--ease-out), opacity 0.35s;
+      opacity: 0.6;
+    }
+    body.cursor-hover .cursor-dot { width: 12px; height: 12px; }
+    body.cursor-hover .cursor-ring { width: 56px; height: 56px; opacity: 0.4; }
+
+    /* ===== LOADER ===== */
+    #loader {
+      position: fixed; inset: 0; z-index: 10000;
+      background: var(--charcoal);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .loader-blueprint {
+      width: 200px; height: 140px; position: relative; margin-bottom: 40px;
+    }
+    .loader-blueprint svg { width: 100%; height: 100%; opacity: 0.7; }
+    .loader-brand {
+      font-family: var(--ff-display);
+      font-size: 2rem; font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .loader-bar-wrap {
+      width: 240px; height: 1px;
+      background: rgba(199,164,106,0.2);
+      position: relative; overflow: hidden;
+    }
+    .loader-bar {
+      height: 100%; background: var(--gold);
+      width: 0%; transition: width 0.05s linear;
+    }
+    .loader-pct {
+      font-family: var(--ff-body);
+      font-size: 0.7rem; letter-spacing: 0.3em;
+      color: rgba(199,164,106,0.6);
+      margin-top: 12px;
+      text-transform: uppercase;
+    }
+
+    /* ===== NAV ===== */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 24px 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
+    }
+    #nav.scrolled {
+      background: rgba(248,246,242,0.92);
+      backdrop-filter: blur(20px);
+      padding: 16px 5%;
+      box-shadow: 0 1px 0 rgba(199,164,106,0.15);
+    }
+    .nav-logo {
+      font-family: var(--ff-display);
+      font-size: 1.5rem; font-weight: 400;
+      letter-spacing: 0.15em;
+      color: var(--white);
+      transition: color 0.4s;
+    }
+    #nav.scrolled .nav-logo { color: var(--charcoal); }
+    .nav-logo span { color: var(--gold); }
+    .nav-links {
+      display: flex; gap: 36px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      font-weight: 500; color: rgba(255,255,255,0.85);
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px;
+      background: var(--gold); transition: width 0.3s var(--ease-out);
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+    #nav.scrolled .nav-links a { color: var(--mid); }
+    #nav.scrolled .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      padding: 10px 24px;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 1px;
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500;
+      color: var(--white);
+      transition: all 0.3s;
+    }
+    .nav-cta:hover { background: var(--gold); border-color: var(--gold); color: var(--white); }
+    #nav.scrolled .nav-cta { border-color: var(--gold); color: var(--gold); }
+    #nav.scrolled .nav-cta:hover { background: var(--gold); color: var(--white); }
+
+    /* Hamburger */
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: none;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 1.5px;
+      background: var(--white); transition: all 0.3s;
+    }
+    #nav.scrolled .nav-hamburger span { background: var(--charcoal); }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .nav-mobile {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: var(--ivory);
+      flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+      transform: translateY(-100%); transition: transform 0.5s var(--ease-out);
+    }
+    .nav-mobile.open { transform: translateY(0); }
+    .nav-mobile a {
+      font-family: var(--ff-display);
+      font-size: 2.5rem; font-weight: 300;
+      letter-spacing: 0.05em; color: var(--charcoal);
+      transition: color 0.3s;
+    }
+    .nav-mobile a:hover { color: var(--gold); }
+
+    /* ===== HERO ===== */
+    #hero {
+      position: relative; width: 100%; height: 100vh; min-height: 600px;
+      overflow: hidden; display: flex; align-items: center; justify-content: center;
+    }
+    #hero-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(44,44,44,0.55) 0%,
+        rgba(44,44,44,0.2) 50%,
+        rgba(44,44,44,0.6) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; padding: 0 20px;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      font-size: 0.7rem; letter-spacing: 0.45em; text-transform: uppercase;
+      color: var(--gold); font-weight: 500; margin-bottom: 20px;
+      opacity: 0; transform: translateY(20px);
+    }
+    .hero-title {
+      font-family: var(--ff-display);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 300; line-height: 1.05;
+      color: var(--white);
+      letter-spacing: 0.02em;
+      margin-bottom: 24px;
+      opacity: 0; transform: translateY(30px);
+    }
+    .hero-title em { font-style: italic; color: var(--gold-light); }
+    .hero-sub {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      color: rgba(255,255,255,0.75);
+      font-weight: 300; letter-spacing: 0.08em;
+      margin-bottom: 48px;
+      opacity: 0; transform: translateY(20px);
+    }
+    .hero-btns {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      opacity: 0; transform: translateY(20px);
+    }
+    .btn-primary {
+      padding: 15px 40px;
+      background: var(--gold);
+      color: var(--white);
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
+      border-radius: 1px;
+      transition: all 0.35s var(--ease-out);
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold-dark); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(199,164,106,0.35); }
+    .btn-outline {
+      padding: 14px 40px;
+      border: 1px solid rgba(255,255,255,0.5);
+      color: var(--white);
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
+      border-radius: 1px;
+      transition: all 0.35s var(--ease-out);
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+    .hero-scroll-hint {
+      position: absolute; bottom: 36px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      z-index: 2; opacity: 0;
+    }
+    .hero-scroll-hint span {
+      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+      animation: scrollPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0% { opacity: 0.3; transform: scaleY(0.6); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1); }
+      100% { opacity: 0.3; transform: scaleY(0.6); }
+    }
+
+    /* ===== SECTION SHARED ===== */
+    section { position: relative; }
+    .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 5%; }
+    .section-pad { padding: 120px 0; }
+    .section-pad-lg { padding: 160px 0; }
+
+    .section-eyebrow {
+      font-size: 0.68rem; letter-spacing: 0.45em; text-transform: uppercase;
+      color: var(--gold); font-weight: 500; margin-bottom: 16px;
+      display: block;
+    }
+    .section-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      font-weight: 300; line-height: 1.1;
+      color: var(--charcoal); letter-spacing: 0.01em;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-lead {
+      font-size: 1.05rem; color: var(--mid);
+      font-weight: 300; line-height: 1.8; max-width: 600px;
+      margin-top: 20px;
+    }
+
+    /* Gold rule signature */
+    .gold-rule {
+      display: block; height: 1px; background: var(--gold);
+      width: 60px; margin: 28px 0;
+      transform-origin: left;
+    }
+    .gold-rule.center { margin: 28px auto; transform-origin: center; }
+
+    /* ===== ABOUT ===== */
+    #about { background: var(--white); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-img-wrap {
+      width: 100%; aspect-ratio: 4/5;
+      background: var(--beige);
+      position: relative; overflow: hidden;
+    }
+    .about-img-interior {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #E9E0D4 0%, #D4C5B0 40%, #BCA88A 100%);
+      position: relative; overflow: hidden;
+    }
+    .about-img-interior::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: 
+        radial-gradient(ellipse at 70% 30%, rgba(199,164,106,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(199,164,106,0.08) 0%, transparent 50%);
+    }
+    /* Decorative architectural lines inside the about image */
+    .about-arch-lines {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: center; gap: 0;
+    }
+    .about-arch-svg { width: 70%; opacity: 0.18; }
+    .about-accent-box {
+      position: absolute; bottom: -24px; right: -24px;
+      width: 160px; height: 160px;
+      background: var(--gold);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: var(--white);
+    }
+    .about-accent-box .num {
+      font-family: var(--ff-display);
+      font-size: 3.5rem; font-weight: 300; line-height: 1;
+    }
+    .about-accent-box .lbl {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      opacity: 0.85; margin-top: 4px;
+    }
+    .about-philosophy {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px; margin-top: 40px;
+    }
+    .about-pill {
+      padding: 20px;
+      background: var(--ivory);
+      border-left: 2px solid var(--gold);
+    }
+    .about-pill h4 {
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); font-weight: 500; margin-bottom: 6px;
+    }
+    .about-pill p {
+      font-size: 0.88rem; color: var(--mid); line-height: 1.6;
+    }
+
+    /* ===== SERVICES ===== */
+    #services { background: var(--ivory); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px; margin-top: 60px;
+    }
+    .service-card {
+      background: var(--white);
+      padding: 40px 32px;
+      position: relative; overflow: hidden;
+      transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+      transform-style: preserve-3d;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: var(--gold);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.5s var(--ease-out);
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(44,44,44,0.08);
+    }
+    .service-icon {
+      width: 40px; height: 40px; margin-bottom: 24px;
+      color: var(--gold);
+    }
+    .service-num {
+      font-family: var(--ff-display);
+      font-size: 3rem; font-weight: 300;
+      color: var(--beige); line-height: 1;
+      position: absolute; top: 24px; right: 24px;
+      transition: color 0.4s;
+    }
+    .service-card:hover .service-num { color: rgba(199,164,106,0.2); }
+    .service-card h3 {
+      font-family: var(--ff-display);
+      font-size: 1.3rem; font-weight: 400; margin-bottom: 12px;
+      color: var(--charcoal);
+    }
+    .service-card p {
+      font-size: 0.85rem; color: var(--mid); line-height: 1.7;
+    }
+    .service-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 20px;
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); font-weight: 500;
+      transition: gap 0.3s;
+    }
+    .service-link:hover { gap: 10px; }
+
+    /* ===== STATS ===== */
+    #stats {
+      background: var(--charcoal);
+      overflow: hidden;
+    }
+    .stats-bg-text {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--ff-display);
+      font-size: 18vw; font-weight: 300;
+      color: rgba(255,255,255,0.03);
+      white-space: nowrap; pointer-events: none; user-select: none;
+      letter-spacing: 0.05em;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; text-align: center;
+      position: relative; z-index: 1;
+    }
+    .stat-item {
+      padding: 80px 40px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: var(--ff-display);
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 300; color: var(--gold);
+      line-height: 1; letter-spacing: -0.01em;
+    }
+    .stat-suffix {
+      font-family: var(--ff-display);
+      font-size: 2rem; font-weight: 300; color: var(--gold-light);
+    }
+    .stat-label {
+      font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); margin-top: 12px;
+    }
+    .stat-divider { width: 30px; height: 1px; background: var(--gold); margin: 16px auto; opacity: 0.4; }
+
+    /* ===== PROJECTS ===== */
+    #projects { background: var(--white); }
+    .projects-filter {
+      display: flex; gap: 8px; margin: 48px 0 40px; flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 9px 24px;
+      border: 1px solid var(--beige);
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--mid); font-weight: 500;
+      border-radius: 1px; transition: all 0.3s;
+      cursor: none;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--gold); border-color: var(--gold); color: var(--white);
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 4px;
+    }
+    .project-card {
+      position: relative; overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: none;
+    }
+    .project-card:nth-child(1) { grid-column: span 2; aspect-ratio: 16/9; }
+    .project-card:nth-child(5) { grid-column: span 2; aspect-ratio: 16/9; }
+    .project-bg {
+      width: 100%; height: 100%;
+      transition: transform 0.7s var(--ease-out);
+    }
+    .project-card:hover .project-bg { transform: scale(1.06); }
+    .project-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(44,44,44,0.85) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .project-card:hover .project-overlay { opacity: 1; }
+    .project-info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 28px;
+      transform: translateY(10px); opacity: 0;
+      transition: all 0.4s var(--ease-out);
+    }
+    .project-card:hover .project-info { transform: translateY(0); opacity: 1; }
+    .project-cat {
+      font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 6px;
+    }
+    .project-name {
+      font-family: var(--ff-display);
+      font-size: 1.5rem; font-weight: 300; color: var(--white);
+    }
+    /* Gradient color swatches for project cards */
+    .p-grad-1 { background: linear-gradient(135deg, #BCA88A 0%, #8C7A5E 100%); }
+    .p-grad-2 { background: linear-gradient(135deg, #C8B89A 0%, #A09070 100%); }
+    .p-grad-3 { background: linear-gradient(135deg, #D4C0A0 0%, #B09070 100%); }
+    .p-grad-4 { background: linear-gradient(135deg, #A89878 0%, #887050 100%); }
+    .p-grad-5 { background: linear-gradient(135deg, #E0CEB0 0%, #C0A880 100%); }
+    .p-grad-6 { background: linear-gradient(135deg, #B8A888 0%, #988868 100%); }
+
+    /* Architectural pattern overlays for project cards */
+    .p-grad-1::after, .p-grad-2::after, .p-grad-3::after,
+    .p-grad-4::after, .p-grad-5::after, .p-grad-6::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* ===== WHY CHOOSE ===== */
+    #why { background: var(--ivory); }
+    .why-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 40px; margin-top: 64px;
+    }
+    .why-item {
+      padding: 40px;
+      background: var(--white);
+      border-top: 2px solid transparent;
+      transition: border-color 0.4s, transform 0.4s var(--ease-out), box-shadow 0.4s;
+    }
+    .why-item:hover {
+      border-top-color: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(44,44,44,0.06);
+    }
+    .why-icon-wrap {
+      width: 52px; height: 52px;
+      border: 1px solid var(--beige);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+      transition: border-color 0.4s, background 0.4s;
+    }
+    .why-item:hover .why-icon-wrap { border-color: var(--gold); background: rgba(199,164,106,0.06); }
+    .why-icon-wrap svg { width: 24px; height: 24px; color: var(--gold); }
+    .why-item h3 {
+      font-family: var(--ff-display);
+      font-size: 1.25rem; font-weight: 400; margin-bottom: 12px;
+      color: var(--charcoal);
+    }
+    .why-item p { font-size: 0.88rem; color: var(--mid); line-height: 1.7; }
+
+    /* ===== TESTIMONIALS ===== */
+    #testimonials { background: var(--white); overflow: hidden; }
+    .testimonials-track-wrap { overflow: hidden; margin-top: 60px; }
+    .testimonials-track {
+      display: flex; gap: 28px;
+      transition: transform 0.6s var(--ease-out);
+    }
+    .testi-card {
+      min-width: 380px; flex-shrink: 0;
+      background: var(--ivory);
+      padding: 40px;
+      border: 1px solid rgba(199,164,106,0.15);
+      position: relative;
+    }
+    .testi-card::before {
+      content: '\201C';
+      font-family: var(--ff-display);
+      font-size: 5rem; font-weight: 300;
+      color: var(--gold); opacity: 0.3;
+      position: absolute; top: 16px; left: 32px;
+      line-height: 1;
+    }
+    .testi-stars {
+      display: flex; gap: 3px; margin-bottom: 20px;
+    }
+    .testi-stars span { color: var(--gold); font-size: 0.9rem; }
+    .testi-text {
+      font-size: 0.95rem; color: var(--mid); line-height: 1.8;
+      font-style: italic; margin-bottom: 28px;
+    }
+    .testi-author {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .testi-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--beige);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--ff-display); font-size: 1.1rem; color: var(--gold-dark);
+    }
+    .testi-name { font-weight: 500; font-size: 0.9rem; color: var(--charcoal); }
+    .testi-loc { font-size: 0.75rem; color: var(--mid); }
+    .testi-controls {
+      display: flex; gap: 12px; margin-top: 40px; justify-content: center;
+    }
+    .testi-btn {
+      width: 44px; height: 44px;
+      border: 1px solid var(--beige);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s; cursor: none;
+    }
+    .testi-btn:hover { border-color: var(--gold); background: var(--gold); }
+    .testi-btn:hover svg { color: var(--white); }
+    .testi-btn svg { width: 16px; height: 16px; color: var(--mid); }
+
+    /* ===== PROCESS ===== */
+    #process { background: var(--ivory); }
+    .process-timeline {
+      position: relative; margin-top: 72px;
+      padding-bottom: 20px;
+    }
+    .process-line {
+      position: absolute; top: 28px; left: 28px; right: 28px;
+      height: 1px; background: var(--beige);
+    }
+    .process-line-fill {
+      position: absolute; top: 28px; left: 28px;
+      height: 1px; background: var(--gold);
+      width: 0%; transition: width 0.1s;
+    }
+    .process-steps {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      position: relative; z-index: 1;
+    }
+    .process-step {
+      padding: 0 20px; text-align: center;
+      opacity: 0.3; transition: opacity 0.5s var(--ease-out);
+    }
+    .process-step.active { opacity: 1; }
+    .process-dot {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--beige);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      font-family: var(--ff-display);
+      font-size: 1.1rem; color: var(--mid);
+      transition: all 0.4s var(--ease-out);
+    }
+    .process-step.active .process-dot {
+      border-color: var(--gold);
+      background: var(--gold); color: var(--white);
+      box-shadow: 0 0 0 8px rgba(199,164,106,0.12);
+    }
+    .process-step h4 {
+      font-family: var(--ff-display);
+      font-size: 1.1rem; font-weight: 400; color: var(--charcoal);
+      margin-bottom: 8px;
+    }
+    .process-step p { font-size: 0.82rem; color: var(--mid); line-height: 1.6; }
+
+    /* ===== MAP ===== */
+    #map-section { background: var(--white); }
+    .map-grid {
+      display: grid; grid-template-columns: 1fr 1.6fr;
+      gap: 0; margin-top: 60px;
+      border: 1px solid var(--beige);
+    }
+    .map-contact-info {
+      padding: 60px 48px;
+      background: var(--charcoal);
+    }
+    .map-contact-info h3 {
+      font-family: var(--ff-display);
+      font-size: 2rem; font-weight: 300;
+      color: var(--white); margin-bottom: 40px;
+    }
+    .contact-detail {
+      display: flex; gap: 16px; align-items: flex-start;
+      margin-bottom: 28px;
+    }
+    .contact-detail-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      border: 1px solid rgba(199,164,106,0.3);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-detail-icon svg { width: 16px; height: 16px; color: var(--gold); }
+    .contact-detail-text .label {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); margin-bottom: 4px;
+    }
+    .contact-detail-text .val {
+      font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.6;
+    }
+    .directions-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 13px 28px;
+      background: var(--gold); color: var(--white);
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
+      margin-top: 32px; transition: background 0.3s;
+    }
+    .directions-btn:hover { background: var(--gold-dark); }
+    .directions-btn svg { width: 14px; height: 14px; }
+    .map-embed { height: 460px; }
+    .map-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* ===== CONTACT ===== */
+    #contact { background: var(--ivory); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.3fr;
+      gap: 80px; align-items: start; margin-top: 64px;
+    }
+    .contact-left h3 {
+      font-family: var(--ff-display);
+      font-size: 2.5rem; font-weight: 300; color: var(--charcoal);
+      line-height: 1.2; margin-bottom: 20px;
+    }
+    .contact-left h3 em { font-style: italic; color: var(--gold); }
+    .contact-left p {
+      font-size: 0.9rem; color: var(--mid); line-height: 1.8; margin-bottom: 32px;
+    }
+    .contact-wa-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 14px 32px;
+      background: #25D366; color: var(--white);
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500;
+      border-radius: 1px; transition: background 0.3s;
+    }
+    .contact-wa-btn:hover { background: #1DA851; }
+    .contact-form { display: flex; flex-direction: column; gap: 18px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label {
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--mid); font-weight: 500;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 13px 16px;
+      background: var(--white);
+      border: 1px solid var(--beige);
+      font-family: var(--ff-body); font-size: 0.9rem; color: var(--charcoal);
+      outline: none; transition: border-color 0.3s;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--gold);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select {
+      cursor: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C7A46A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 16px center;
+      padding-right: 40px;
+    }
+    .form-submit {
+      padding: 15px 40px;
+      background: var(--charcoal); color: var(--white);
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
+      cursor: none; transition: background 0.3s, transform 0.3s;
+      border-radius: 0; align-self: flex-start;
+    }
+    .form-submit:hover { background: var(--gold); transform: translateY(-2px); }
+
+    /* ===== FOOTER ===== */
+    #footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.7);
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 60px; padding: 80px 5%;
+      max-width: 1280px; margin: 0 auto;
+    }
+    .footer-brand {
+      font-family: var(--ff-display);
+      font-size: 1.6rem; font-weight: 300;
+      color: var(--white); letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+    .footer-brand span { color: var(--gold); }
+    .footer-tagline {
+      font-size: 0.82rem; color: rgba(255,255,255,0.4);
+      line-height: 1.7; margin-bottom: 28px;
+    }
+    .footer-socials { display: flex; gap: 10px; }
+    .footer-social {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .footer-social:hover { border-color: var(--gold); background: rgba(199,164,106,0.1); }
+    .footer-social svg { width: 15px; height: 15px; color: rgba(255,255,255,0.6); }
+    .footer-col h4 {
+      font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); font-weight: 500; margin-bottom: 24px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a {
+      font-size: 0.85rem; color: rgba(255,255,255,0.5);
+      transition: color 0.3s;
+    }
+    .footer-col ul a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 24px 5%; max-width: 1280px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+
+    /* ===== FLOATING WA ===== */
+    #wa-float {
+      position: fixed; bottom: 32px; right: 32px; z-index: 900;
+      width: 56px; height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 32px rgba(37,211,102,0.35);
+      transition: transform 0.3s var(--ease-out), box-shadow 0.3s;
+      cursor: none;
+    }
+    #wa-float:hover {
+      transform: scale(1.1) translateY(-2px);
+      box-shadow: 0 16px 40px rgba(37,211,102,0.45);
+    }
+    #wa-float svg { width: 28px; height: 28px; fill: white; }
+    .wa-pulse {
+      position: absolute; inset: -4px;
+      border-radius: 50%; border: 2px solid #25D366;
+      animation: waPulse 2s ease-out infinite;
+    }
+    @keyframes waPulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    /* ===== REVEAL ANIMATIONS ===== */
+    .reveal { opacity: 0; transform: translateY(40px); }
+    .reveal-left { opacity: 0; transform: translateX(-40px); }
+    .reveal-right { opacity: 0; transform: translateX(40px); }
+    .reveal-scale { opacity: 0; transform: scale(0.94); }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-visual { max-width: 500px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-mobile { display: flex; }
+      .section-pad { padding: 80px 0; }
+      .section-pad-lg { padding: 100px 0; }
+      .hero-title { font-size: clamp(2.5rem, 10vw, 4rem); }
+      .about-philosophy { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card:nth-child(1),
+      .project-card:nth-child(5) { grid-column: span 1; aspect-ratio: 4/3; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr; }
+      .process-line, .process-line-fill { display: none; }
+      .process-step { opacity: 1; }
+      .map-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 40px; }
+      .testi-card { min-width: 300px; }
+      #wa-float { bottom: 20px; right: 20px; }
+    }
+
+    /* Glassmorphism utility */
+    .glass {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    /* Page transitions */
+    .page-transition {
+      position: fixed; inset: 0; z-index: 9998;
+      background: var(--gold);
+      transform: scaleX(0); transform-origin: left;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor">
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+</div>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-blueprint">
+    <svg viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="20" y="20" width="160" height="100" stroke="#C7A46A" stroke-width="0.8" stroke-dasharray="4 3"/>
+      <line x1="20" y1="20" x2="180" y2="120" stroke="#C7A46A" stroke-width="0.4" opacity="0.5"/>
+      <line x1="180" y1="20" x2="20" y2="120" stroke="#C7A46A" stroke-width="0.4" opacity="0.5"/>
+      <rect x="70" y="70" width="60" height="50" stroke="#C7A46A" stroke-width="1"/>
+      <rect x="80" y="70" width="16" height="26" stroke="#C7A46A" stroke-width="0.8"/>
+      <rect x="108" y="70" width="16" height="26" stroke="#C7A46A" stroke-width="0.8"/>
+      <line x1="20" y1="70" x2="70" y2="70" stroke="#C7A46A" stroke-width="0.8"/>
+      <line x1="130" y1="70" x2="180" y2="70" stroke="#C7A46A" stroke-width="0.8"/>
+      <line x1="100" y1="20" x2="100" y2="70" stroke="#C7A46A" stroke-width="0.5" opacity="0.6"/>
+      <circle cx="100" cy="45" r="3" stroke="#C7A46A" stroke-width="0.8"/>
+      <line x1="20" y1="30" x2="20" y2="15" stroke="#C7A46A" stroke-width="0.5"/>
+      <line x1="180" y1="30" x2="180" y2="15" stroke="#C7A46A" stroke-width="0.5"/>
+      <line x1="20" y1="15" x2="180" y2="15" stroke="#C7A46A" stroke-width="0.5"/>
+    </svg>
+  </div>
+  <div class="loader-brand">ARCH</div>
+  <div class="loader-bar-wrap">
+    <div class="loader-bar" id="loader-bar"></div>
+  </div>
+  <div class="loader-pct" id="loader-pct">0%</div>
+</div>
+
+<!-- Page transition overlay -->
+<div class="page-transition" id="page-transition"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">ARCH <span>·</span> Studio</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Book Consultation</a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="nav-mobile" id="nav-mobile">
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#services" class="mobile-link">Services</a>
+  <a href="#projects" class="mobile-link">Projects</a>
+  <a href="#process" class="mobile-link">Process</a>
+  <a href="#map-section" class="mobile-link">Location</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Chennai's Premier Interior Studio</p>
+    <h1 class="hero-title">Crafting Spaces<br /><em>Beyond Imagination</em></h1>
+    <p class="hero-sub">Luxury Interior Design & Architectural Excellence</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Book Consultation</a>
+      <a href="#projects" class="btn-outline">View Projects</a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section-pad">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-visual reveal-left">
+        <div class="about-img-wrap">
+          <div class="about-img-interior">
+            <div class="about-arch-lines">
+              <svg class="about-arch-svg" viewBox="0 0 300 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="20" width="260" height="200" stroke="#2C2C2C" stroke-width="1"/>
+                <rect x="50" y="100" width="80" height="120" stroke="#2C2C2C" stroke-width="0.8"/>
+                <rect x="170" y="100" width="80" height="120" stroke="#2C2C2C" stroke-width="0.8"/>
+                <rect x="110" y="60" width="80" height="60" stroke="#2C2C2C" stroke-width="0.8"/>
+                <line x1="20" y1="100" x2="300" y2="100" stroke="#2C2C2C" stroke-width="0.5"/>
+                <path d="M110 60 L150 20 L190 60" stroke="#2C2C2C" stroke-width="0.8" fill="none"/>
+                <circle cx="150" cy="88" r="6" stroke="#2C2C2C" stroke-width="0.8"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="about-accent-box">
+          <div class="num">10</div>
+          <div class="lbl">Years of<br/>Excellence</div>
+        </div>
+      </div>
+      <div class="about-text">
+        <span class="section-eyebrow reveal">Our Story</span>
+        <h2 class="section-title reveal">Where Art Meets<br /><em>Architecture</em></h2>
+        <div class="gold-rule reveal"></div>
+        <p class="section-lead reveal">
+          At ARCH Interior Design Studios, we don't just design spaces — we craft 
+          living experiences. Founded with a singular vision of bringing international 
+          luxury standards to Chennai, every project we undertake is a testament to 
+          our unwavering commitment to perfection.
+        </p>
+        <p class="section-lead reveal" style="margin-top: 16px;">
+          From opulent villa interiors to cutting-edge commercial spaces, our team 
+          of seasoned designers transforms your vision into breathtaking reality — 
+          with precision, passion, and an eye for the extraordinary.
+        </p>
+        <div class="about-philosophy">
+          <div class="about-pill reveal">
+            <h4>Design Philosophy</h4>
+            <p>Every space tells a story. We listen deeply to craft yours.</p>
+          </div>
+          <div class="about-pill reveal">
+            <h4>Premium Craft</h4>
+            <p>Only the finest materials, sourced from across the globe.</p>
+          </div>
+          <div class="about-pill reveal">
+            <h4>Client First</h4>
+            <p>Your vision guides every decision we make.</p>
+          </div>
+          <div class="about-pill reveal">
+            <h4>Timely Delivery</h4>
+            <p>Luxury delivered on schedule, every single time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section-pad">
+  <div class="section-inner">
+    <span class="section-eyebrow reveal">What We Do</span>
+    <h2 class="section-title reveal">Our Design<br /><em>Expertise</em></h2>
+    <div class="services-grid">
+      <!-- Service cards -->
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 35V15L20 5L35 15V35H25V25H15V35H5Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        </svg>
+        <h3>Residential Interiors</h3>
+        <p>Transforming homes into personal sanctuaries. From bedroom to living room, each space refined to perfection.</p>
+        <div class="service-link">Explore <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.2"/></svg></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">02</div>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 38V18L20 4L37 18V38" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <rect x="14" y="24" width="12" height="14" stroke="currentColor" stroke-width="1.2" fill="none"/>
+          <rect x="8" y="14" width="8" height="8" stroke="currentColor" stroke-width="1" fill="none"/>
+          <rect x="24" y="14" width="8" height="8" stroke="currentColor" stroke-width="1" fill="none"/>
+        </svg>
+        <h3>Luxury Villa Design</h3>
+        <p>Grand-scale luxury for premium residences. Turning villas into architectural masterpieces.</p>
+        <div class="service-link">Explore <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.2"/></svg></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">03</div>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="32" height="26" stroke="currentColor" stroke-width="1.5" fill="none" rx="1"/>
+          <line x1="4" y1="18" x2="36" y2="18" stroke="currentColor" stroke-width="1"/>
+          <line x1="14" y1="8" x2="14" y2="34" stroke="currentColor" stroke-width="1"/>
+          <line x1="26" y1="8" x2="26" y2="34" stroke="currentColor" stroke-width="1"/>
+          <rect x="8" y="22" width="4" height="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        </svg>
+        <h3>Modular Kitchen</h3>
+        <p>Intelligent, beautiful kitchens that merge functionality with world-class aesthetics.</p>
+        <div class="service-link">Explore <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.2"/></svg></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">04</div>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="10" width="32" height="24" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <line x1="4" y1="18" x2="36" y2="18" stroke="currentColor" stroke-width="1"/>
+          <rect x="8" y="22" width="8" height="8" stroke="currentColor" stroke-width="1" fill="none"/>
+          <rect x="20" y="22" width="12" height="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+          <rect x="20" y="28" width="12" height="2" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        </svg>
+        <h3>Commercial Interiors</h3>
+        <p>Retail, hospitality, and showroom environments that captivate and convert.</p>
+        <div class="service-link">Explore <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.2"/></svg></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">05</div>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="6" width="28" height="22" stroke="currentColor" stroke-width="1.5" fill="none" rx="1"/>
+          <line x1="6" y1="14" x2="34" y2="14" stroke="currentColor" stroke-width="1"/>
+          <rect x="10" y="18" width="8" height="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
+          <rect x="22" y="18" width="8" height="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
+          <line x1="10" y1="32" x2="30" y2="32" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="16" y1="28" x2="16" y2="32" stroke="currentColor" stroke-width="1"/>
+          <line x1="24" y1="28" x2="24" y2="32" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <h3>Office Spaces</h3>
+        <p>Dynamic workplaces designed to inspire creativity, collaboration, and productivity.</p>
+        <div class="service-link">Explore <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.2"/></svg></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">06</div>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 32L8 12L32 8L32 32" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <path d="M4 32h32" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M14 32V20h12v12" stroke="currentColor" stroke-width="1" fill="none"/>
+          <circle cx="20" cy="14" r="3" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <h3>Renovation & Remodeling</h3>
+        <p>Breathing new life into existing spaces with thoughtful, transformative redesigns.</p>
+        <div class="service-link">Explore <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.2"/></svg></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">07</div>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="18" width="28" height="16" stroke="currentColor" stroke-width="1.5" fill="none" rx="1"/>
+          <line x1="6" y1="24" x2="34" y2="24" stroke="currentColor" stroke-width="1"/>
+          <line x1="10" y1="18" x2="10" y2="12" stroke="currentColor" stroke-width="1"/>
+          <line x1="30" y1="18" x2="30" y2="12" stroke="currentColor" stroke-width="1"/>
+          <line x1="10" y1="12" x2="30" y2="12" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <h3>Custom Furniture</h3>
+        <p>Bespoke pieces engineered and crafted for your space, your taste, your story.</p>
+        <div class="service-link">Explore <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.2"/></svg></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">08</div>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <path d="M20 6v4M20 30v4M6 20h4M30 20h4" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="20" cy="20" r="6" stroke="currentColor" stroke-width="1" fill="none"/>
+          <path d="M14 14l4 4M22 22l4 4M14 26l4-4M22 18l4-4" stroke="currentColor" stroke-width="0.8"/>
+        </svg>
+        <h3>Turnkey Projects</h3>
+        <p>Complete end-to-end interior solutions — from concept to handover, zero stress.</p>
+        <div class="service-link">Explore <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.2"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats" class="section-pad">
+  <div class="stats-bg-text">ARCH</div>
+  <div class="section-inner">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-num"><span class="counter" data-target="100">0</span><span class="stat-suffix">+</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-num"><span class="counter" data-target="95">0</span><span class="stat-suffix">%</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-num"><span class="counter" data-target="10">0</span><span class="stat-suffix">+</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-num"><span class="counter" data-target="24">0</span><span class="stat-suffix">/7</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-label">Client Support</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section-pad">
+  <div class="section-inner">
+    <span class="section-eyebrow reveal">Portfolio</span>
+    <h2 class="section-title reveal">Featured<br /><em>Creations</em></h2>
+    <div class="projects-filter reveal">
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="villa">Villas</button>
+      <button class="filter-btn" data-filter="apartment">Apartments</button>
+      <button class="filter-btn" data-filter="office">Offices</button>
+      <button class="filter-btn" data-filter="commercial">Commercial</button>
+    </div>
+    <div class="projects-grid" id="projects-grid">
+      <div class="project-card" data-cat="villa">
+        <div class="project-bg p-grad-1"></div>
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <div class="project-cat">Villa · Anna Nagar</div>
+          <div class="project-name">The Ivory Residence</div>
+        </div>
+      </div>
+      <div class="project-card" data-cat="apartment">
+        <div class="project-bg p-grad-2"></div>
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <div class="project-cat">Apartment · Adyar</div>
+          <div class="project-name">Champagne Loft</div>
+        </div>
+      </div>
+      <div class="project-card" data-cat="office">
+        <div class="project-bg p-grad-3"></div>
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <div class="project-cat">Office · Nungambakkam</div>
+          <div class="project-name">Executive Suite</div>
+        </div>
+      </div>
+      <div class="project-card" data-cat="commercial">
+        <div class="project-bg p-grad-4"></div>
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <div class="project-cat">Commercial · T. Nagar</div>
+          <div class="project-name">The Boutique Atelier</div>
+        </div>
+      </div>
+      <div class="project-card" data-cat="villa">
+        <div class="project-bg p-grad-5"></div>
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <div class="project-cat">Villa · Boat Club Road</div>
+          <div class="project-name">Penthouse Palms</div>
+        </div>
+      </div>
+      <div class="project-card" data-cat="apartment">
+        <div class="project-bg p-grad-6"></div>
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <div class="project-cat">Apartment · Besant Nagar</div>
+          <div class="project-name">The Coastal Haven</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE -->
+<section id="why" class="section-pad">
+  <div class="section-inner">
+    <span class="section-eyebrow reveal">Why ARCH</span>
+    <h2 class="section-title reveal">The ARCH<br /><em>Difference</em></h2>
+    <div class="why-grid">
+      <div class="why-item reveal">
+        <div class="why-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h3>Premium Quality</h3>
+        <p>We source only the finest materials — Italian marble, solid wood, premium fabrics — to ensure your space exudes authentic luxury that lasts generations.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h3>On-Time Delivery</h3>
+        <p>We understand that your time is valuable. Every project is delivered on schedule, with milestone-based updates keeping you informed at every step.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 3C8 3 4 7 4 12s4 9 8 9 8-4 8-9-4-9-8-9z" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 12s1.5 3 4 3 4-3 4-3" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M9 9h.01M15 9h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Personalized Design</h3>
+        <p>Every client receives a design conceived exclusively for them. No templates, no shortcuts — only visions uniquely tailored to your lifestyle and aspirations.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h3>Expert Team</h3>
+        <p>Our team of certified interior designers and project managers brings decades of combined experience in luxury residential and commercial design.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h3>Transparent Pricing</h3>
+        <p>No hidden costs, no surprises. You receive detailed quotes upfront with clear breakdowns, so you're always in complete control of your investment.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h3>After-Service Support</h3>
+        <p>Our relationship doesn't end at handover. We offer comprehensive post-project support to ensure your space continues to look and feel perfect.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="section-pad" style="background: var(--white);">
+  <div class="section-inner">
+    <span class="section-eyebrow reveal">Client Voices</span>
+    <h2 class="section-title reveal">What Our Clients<br /><em>Say</em></h2>
+    <div class="testimonials-track-wrap reveal">
+      <div class="testimonials-track" id="testi-track">
+        <div class="testi-card">
+          <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="testi-text">"ARCH transformed our Boat Club Road villa into something we could only have dreamed of. Every room feels like a page from an architectural magazine. The attention to detail is simply extraordinary."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">R</div>
+            <div>
+              <div class="testi-name">Rajesh Krishnamurthy</div>
+              <div class="testi-loc">Villa Project, Boat Club Road</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="testi-text">"We handed over the keys and got back a palace. The team at ARCH understood our vision better than we did ourselves. Our modular kitchen alone has made us the envy of our entire apartment complex."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">P</div>
+            <div>
+              <div class="testi-name">Priya Sundarajan</div>
+              <div class="testi-loc">Apartment, Adyar</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="testi-text">"Our office in Nungambakkam has become a powerful statement of brand identity. Clients walk in and immediately sense our company's calibre. ARCH delivered beyond our highest expectations."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">V</div>
+            <div>
+              <div class="testi-name">Vikram Mehta</div>
+              <div class="testi-loc">Commercial Office, Nungambakkam</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="testi-text">"From the first consultation to the final handover, the entire journey was seamless. The team kept us informed throughout and delivered exactly on their promised timeline. Truly professional."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">A</div>
+            <div>
+              <div class="testi-name">Ananya Rajan</div>
+              <div class="testi-loc">Residential, Anna Nagar</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="testi-text">"The custom furniture ARCH designed for our living room is a conversation piece every time we have guests. Museum-quality craftsmanship at a fair price. I cannot recommend them highly enough."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">S</div>
+            <div>
+              <div class="testi-name">Suresh Natarajan</div>
+              <div class="testi-loc">Custom Furniture, T. Nagar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-controls">
+      <button class="testi-btn" id="testi-prev">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <button class="testi-btn" id="testi-next">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="section-pad" style="background: var(--ivory);">
+  <div class="section-inner">
+    <span class="section-eyebrow reveal">How We Work</span>
+    <h2 class="section-title reveal">Our Design<br /><em>Process</em></h2>
+    <div class="process-timeline reveal" id="process-timeline">
+      <div class="process-line"></div>
+      <div class="process-line-fill" id="process-fill"></div>
+      <div class="process-steps">
+        <div class="process-step active">
+          <div class="process-dot">01</div>
+          <h4>Consultation</h4>
+          <p>We begin by understanding your lifestyle, preferences, and aspirations in detail.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-dot">02</div>
+          <h4>Concept Design</h4>
+          <p>Our designers craft bespoke mood boards, layouts, and material palettes for your approval.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-dot">03</div>
+          <h4>3D Visualization</h4>
+          <p>Photo-realistic 3D renders let you walk through your future space before construction begins.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-dot">04</div>
+          <h4>Execution</h4>
+          <p>Master craftsmen and project managers bring the vision to life with precision and care.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-dot">05</div>
+          <h4>Handover</h4>
+          <p>We deliver your transformed space with a complete quality walkthrough and support package.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="map-section" class="section-pad" style="background: var(--ivory);">
+  <div class="section-inner">
+    <span class="section-eyebrow reveal">Find Us</span>
+    <h2 class="section-title reveal">Visit Our<br /><em>Studio</em></h2>
+    <div class="map-grid reveal">
+      <div class="map-contact-info">
+        <h3>ARCH Interior<br />Design Studios</h3>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          </div>
+          <div class="contact-detail-text">
+            <div class="label">Address</div>
+            <div class="val">13/1 Jan John Mohammed Street,<br />Border Thottam, Anna Salai,<br />Triplicane, Chennai – 600002</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="1.5"/></svg>
+          </div>
+          <div class="contact-detail-text">
+            <div class="label">Phone</div>
+            <div class="val">+91 70103 10540</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.5"/></svg>
+          </div>
+          <div class="contact-detail-text">
+            <div class="label">Working Hours</div>
+            <div class="val">Mon – Sat: 9:00 AM – 7:00 PM<br />Sunday: By Appointment</div>
+          </div>
+        </div>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=13/1+Jan+John+Mohammed+Street+Triplicane+Chennai+600002" target="_blank" rel="noopener" class="directions-btn">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L19 9H14V22H10V9H5L12 2Z" stroke="currentColor" stroke-width="1.5"/></svg>
+          Get Directions
+        </a>
+      </div>
+      <div class="map-embed">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.0!2d80.2707!3d13.0578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDAzJzI4LjEiTiA4MMKwMTYnMTQuNSJF!5e0!3m2!1sen!2sin!4v1000000000000!5m2!1sen!2sin"
+          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade" title="ARCH Interior Design Studios Location">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section-pad" style="background: var(--white);">
+  <div class="section-inner">
+    <span class="section-eyebrow reveal">Get In Touch</span>
+    <h2 class="section-title reveal">Begin Your<br /><em>Design Journey</em></h2>
+    <div class="contact-grid">
+      <div class="contact-left reveal-left">
+        <div class="gold-rule"></div>
+        <h3>Let's Create Something<br /><em>Extraordinary</em></h3>
+        <p>Share your vision with us and our design consultants will reach out within 24 hours to discuss how we can transform your space into a masterpiece.</p>
+        <a href="https://wa.me/917010310540?text=Hello%20ARCH%20Interior%20Design%20Studios%2C%20I%20would%20like%20to%20discuss%20my%20interior%20project." target="_blank" rel="noopener" class="contact-wa-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Chat on WhatsApp
+        </a>
+      </div>
+      <div class="contact-form reveal-right">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" placeholder="Your name" />
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" placeholder="+91 XXXXX XXXXX" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@example.com" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Project Type</label>
+            <select>
+              <option value="">Select type</option>
+              <option>Residential Interior</option>
+              <option>Luxury Villa Design</option>
+              <option>Modular Kitchen</option>
+              <option>Commercial Interior</option>
+              <option>Office Space</option>
+              <option>Renovation</option>
+              <option>Custom Furniture</option>
+              <option>Turnkey Project</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Budget Range</label>
+            <select>
+              <option value="">Select budget</option>
+              <option>₹5L – ₹10L</option>
+              <option>₹10L – ₹25L</option>
+              <option>₹25L – ₹50L</option>
+              <option>₹50L – ₹1Cr</option>
+              <option>₹1Cr+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Your Message</label>
+          <textarea placeholder="Tell us about your project, space size, style preferences..."></textarea>
+        </div>
+        <button type="button" class="form-submit">Send Inquiry →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">ARCH <span>·</span> Studio</div>
+      <p class="footer-tagline">Crafting Spaces Beyond Imagination.<br />Luxury interior design in Chennai, India.</p>
+      <div class="footer-socials">
+        <a href="#" class="footer-social" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        </a>
+        <a href="#" class="footer-social" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" stroke="currentColor" stroke-width="1.5"/></svg>
+        </a>
+        <a href="https://wa.me/917010310540" class="footer-social" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="color:rgba(255,255,255,0.6)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+        <a href="tel:+917010310540" class="footer-social" aria-label="Call">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="1.5"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#why">Why ARCH</a></li>
+        <li><a href="#process">Our Process</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Residential Interiors</a></li>
+        <li><a href="#services">Luxury Villa Design</a></li>
+        <li><a href="#services">Modular Kitchen</a></li>
+        <li><a href="#services">Commercial Interiors</a></li>
+        <li><a href="#services">Office Spaces</a></li>
+        <li><a href="#services">Turnkey Projects</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+917010310540">+91 70103 10540</a></li>
+        <li><a href="https://wa.me/917010310540?text=Hello%20ARCH%20Interior%20Design%20Studios%2C%20I%20would%20like%20to%20discuss%20my%20interior%20project." target="_blank">WhatsApp Us</a></li>
+        <li><a href="https://www.google.com/maps/dir/?api=1&destination=13/1+Jan+John+Mohammed+Street+Triplicane+Chennai+600002" target="_blank">Get Directions</a></li>
+      </ul>
+      <p style="margin-top:20px; font-size:0.78rem; color:rgba(255,255,255,0.3); line-height:1.7;">13/1 Jan John Mohammed Street,<br />Triplicane, Chennai – 600002</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 ARCH Interior Design Studios. All rights reserved.</p>
+    <p>Designed with <span style="color:var(--gold)">♥</span> in Chennai</p>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/917010310540?text=Hello%20ARCH%20Interior%20Design%20Studios%2C%20I%20would%20like%20to%20discuss%20my%20interior%20project." target="_blank" rel="noopener" id="wa-float" aria-label="Chat on WhatsApp">
+  <div class="wa-pulse"></div>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+/* ===== LENIS SMOOTH SCROLL ===== */
+const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+gsap.ticker.lagSmoothing(0);
+
+/* ===== CUSTOM CURSOR ===== */
+const cursor = document.getElementById('cursor');
+const dot = cursor.querySelector('.cursor-dot');
+const ring = cursor.querySelector('.cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animCursor() {
+  rx += (mx - rx) * 0.15;
+  ry += (my - ry) * 0.15;
+  dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+document.querySelectorAll('a, button, .service-card, .project-card, .filter-btn, .testi-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+
+/* ===== LOADER ===== */
+const loaderBar = document.getElementById('loader-bar');
+const loaderPct = document.getElementById('loader-pct');
+const loader = document.getElementById('loader');
+let progress = 0;
+const loadInterval = setInterval(() => {
+  progress += Math.random() * 18;
+  if (progress >= 100) { progress = 100; clearInterval(loadInterval); }
+  loaderBar.style.width = progress + '%';
+  loaderPct.textContent = Math.floor(progress) + '%';
+  if (progress === 100) {
+    setTimeout(() => {
+      gsap.to(loader, { opacity: 0, duration: 0.6, ease: 'power2.out', onComplete: () => {
+        loader.style.display = 'none';
+        document.body.classList.add('loaded');
+        initHeroAnims();
+      }});
+    }, 400);
+  }
+}, 80);
+
+/* ===== HERO ANIMATIONS ===== */
+function initHeroAnims() {
+  const tl = gsap.timeline();
+  tl.to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.1)
+    .to('.hero-title',   { opacity: 1, y: 0, duration: 1,   ease: 'power3.out' }, 0.3)
+    .to('.hero-sub',     { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 0.5)
+    .to('.hero-btns',    { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 0.65)
+    .to('.hero-scroll-hint', { opacity: 1, duration: 0.6 }, 1.1);
+}
+
+/* ===== THREE.JS HERO CANVAS ===== */
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+  renderer.setClearColor(0x1a1612, 1);
+
+  const scene = new THREE.Scene();
+  const fog = new THREE.FogExp2(0x1a1612, 0.018);
+  scene.fog = fog;
+
+  const camera = new THREE.PerspectiveCamera(60, canvas.offsetWidth / canvas.offsetHeight, 0.1, 200);
+  camera.position.set(0, 2, 12);
+
+  // Ambient + warm directional light
+  const ambient = new THREE.AmbientLight(0xfff8f0, 0.4);
+  scene.add(ambient);
+  const dir1 = new THREE.DirectionalLight(0xC7A46A, 1.2);
+  dir1.position.set(5, 10, 5);
+  scene.add(dir1);
+  const dir2 = new THREE.DirectionalLight(0xfff8f0, 0.3);
+  dir2.position.set(-5, 3, -5);
+  scene.add(dir2);
+  const pointLight = new THREE.PointLight(0xC7A46A, 2, 30);
+  pointLight.position.set(0, 6, 0);
+  scene.add(pointLight);
+
+  // Materials
+  const floorMat = new THREE.MeshStandardMaterial({ color: 0x3a3028, roughness: 0.2, metalness: 0.05 });
+  const wallMat  = new THREE.MeshStandardMaterial({ color: 0x2e2822, roughness: 0.6 });
+  const goldMat  = new THREE.MeshStandardMaterial({ color: 0xC7A46A, roughness: 0.1, metalness: 0.9 });
+  const ceilMat  = new THREE.MeshStandardMaterial({ color: 0x1e1b18, roughness: 0.8 });
+
+  // Floor
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), floorMat);
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -1;
+  scene.add(floor);
+
+  // Back wall
+  const wall = new THREE.Mesh(new THREE.PlaneGeometry(60, 20), wallMat);
+  wall.position.set(0, 9, -20);
+  scene.add(wall);
+
+  // Side walls
+  const wallL = new THREE.Mesh(new THREE.PlaneGeometry(40, 20), wallMat);
+  wallL.rotation.y = Math.PI / 2;
+  wallL.position.set(-20, 9, -10);
+  scene.add(wallL);
+  const wallR = new THREE.Mesh(new THREE.PlaneGeometry(40, 20), wallMat);
+  wallR.rotation.y = -Math.PI / 2;
+  wallR.position.set(20, 9, -10);
+  scene.add(wallR);
+
+  // Ceiling
+  const ceil = new THREE.Mesh(new THREE.PlaneGeometry(60, 40), ceilMat);
+  ceil.rotation.x = Math.PI / 2;
+  ceil.position.y = 9;
+  scene.add(ceil);
+
+  // Decorative gold columns
+  for (let i = -1; i <= 1; i += 2) {
+    const col = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 10, 8), goldMat);
+    col.position.set(i * 6, 4, -8);
+    scene.add(col);
+    const cap = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.15, 0.3), goldMat);
+    cap.position.set(i * 6, 9.07, -8);
+    scene.add(cap);
+  }
+
+  // Floating geometric panels (architectural wall art)
+  const panelMat = new THREE.MeshStandardMaterial({ color: 0x4a3e30, roughness: 0.4 });
+  for (let r = 0; r < 3; r++) {
+    for (let c = -1; c <= 1; c++) {
+      const panel = new THREE.Mesh(new THREE.BoxGeometry(1.8, 2.4, 0.05), panelMat);
+      panel.position.set(c * 2.2, 1 + r * 2.6, -19.8);
+      scene.add(panel);
+      const border = new THREE.Mesh(new THREE.BoxGeometry(1.9, 2.5, 0.02), goldMat);
+      border.position.set(c * 2.2, 1 + r * 2.6, -19.85);
+      border.scale.set(1, 1, 1);
+      scene.add(border);
+    }
+  }
+
+  // Floor tiles (grid lines)
+  const gridHelper = new THREE.GridHelper(60, 20, 0x3a3028, 0x2e2620);
+  gridHelper.position.y = -0.99;
+  scene.add(gridHelper);
+
+  // Floating gold particles
+  const particleGeo = new THREE.BufferGeometry();
+  const pCount = 120;
+  const positions = new Float32Array(pCount * 3);
+  for (let i = 0; i < pCount; i++) {
+    positions[i * 3]     = (Math.random() - 0.5) * 30;
+    positions[i * 3 + 1] = Math.random() * 14 - 1;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 20 - 5;
+  }
+  particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particleMat = new THREE.PointsMaterial({ color: 0xC7A46A, size: 0.05, transparent: true, opacity: 0.5 });
+  const particles = new THREE.Points(particleGeo, particleMat);
+  scene.add(particles);
+
+  // Camera animation — slow cinematic fly-through
+  let camT = 0;
+  let mouseX = 0, mouseY = 0;
+  document.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 0.6;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 0.2;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    camT += 0.002;
+    camera.position.x += (mouseX * 3 - camera.position.x) * 0.02;
+    camera.position.y += (2 - mouseY * 2 - camera.position.y) * 0.02;
+    camera.position.z = 12 + Math.sin(camT * 0.4) * 2;
+    camera.lookAt(0, 1 + Math.sin(camT * 0.3) * 0.5, -8);
+    particles.rotation.y += 0.0003;
+    particleMat.opacity = 0.4 + Math.sin(camT * 2) * 0.1;
+    pointLight.intensity = 1.8 + Math.sin(camT * 3) * 0.4;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    const w = canvas.offsetWidth, h = canvas.offsetHeight;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  });
+})();
+
+/* ===== NAV SCROLL ===== */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ===== HAMBURGER ===== */
+const hamburger = document.getElementById('hamburger');
+const navMobile = document.getElementById('nav-mobile');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  navMobile.classList.toggle('open');
+  document.body.style.overflow = navMobile.classList.contains('open') ? 'hidden' : '';
+});
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    navMobile.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+
+/* ===== GSAP SCROLL ANIMATIONS ===== */
+gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.defaults({ scroller: document.body });
+
+// Universal reveal
+gsap.utils.toArray('.reveal').forEach(el => {
+  gsap.fromTo(el, { opacity: 0, y: 50 }, {
+    opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+  });
+});
+gsap.utils.toArray('.reveal-left').forEach(el => {
+  gsap.fromTo(el, { opacity: 0, x: -60 }, {
+    opacity: 1, x: 0, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 85%' }
+  });
+});
+gsap.utils.toArray('.reveal-right').forEach(el => {
+  gsap.fromTo(el, { opacity: 0, x: 60 }, {
+    opacity: 1, x: 0, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 85%' }
+  });
+});
+
+// Gold rule expand
+gsap.utils.toArray('.gold-rule').forEach(el => {
+  gsap.fromTo(el, { scaleX: 0 }, {
+    scaleX: 1, duration: 1.2, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 90%' }
+  });
+});
+
+// Hero parallax
+gsap.to('.hero-content', {
+  yPercent: 40,
+  ease: 'none',
+  scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1 }
+});
+
+// Section title split reveal with stagger
+document.querySelectorAll('.section-title').forEach(title => {
+  gsap.fromTo(title, { clipPath: 'inset(0 100% 0 0)', opacity: 1 }, {
+    clipPath: 'inset(0 0% 0 0)',
+    duration: 1.2, ease: 'power3.out',
+    scrollTrigger: { trigger: title, start: 'top 88%' }
+  });
+});
+
+// Service cards stagger
+gsap.utils.toArray('.service-card').forEach((card, i) => {
+  gsap.fromTo(card, { opacity: 0, y: 60 }, {
+    opacity: 1, y: 0, duration: 0.7, delay: (i % 4) * 0.1, ease: 'power3.out',
+    scrollTrigger: { trigger: card, start: 'top 90%' }
+  });
+});
+
+// Counters
+gsap.utils.toArray('.counter').forEach(el => {
+  const target = parseInt(el.dataset.target);
+  ScrollTrigger.create({
+    trigger: el, start: 'top 85%',
+    onEnter: () => {
+      let obj = { val: 0 };
+      gsap.to(obj, {
+        val: target, duration: 2.5, ease: 'power2.out',
+        onUpdate: () => { el.textContent = Math.floor(obj.val); }
+      });
+    }
+  });
+});
+
+// Process timeline
+ScrollTrigger.create({
+  trigger: '#process-timeline',
+  start: 'top 70%', end: 'bottom 80%',
+  scrub: 1,
+  onUpdate: (self) => {
+    const pct = self.progress;
+    const fill = document.getElementById('process-fill');
+    if (fill) fill.style.width = (pct * 80) + '%';
+    const steps = document.querySelectorAll('.process-step');
+    steps.forEach((step, i) => {
+      step.classList.toggle('active', pct > i / steps.length * 0.8);
+    });
+  }
+});
+
+// Project cards
+gsap.utils.toArray('.project-card').forEach((card, i) => {
+  gsap.fromTo(card, { opacity: 0, scale: 0.95 }, {
+    opacity: 1, scale: 1, duration: 0.8, delay: i * 0.07, ease: 'power3.out',
+    scrollTrigger: { trigger: card, start: 'top 92%' }
+  });
+});
+
+// Why items
+gsap.utils.toArray('.why-item').forEach((item, i) => {
+  gsap.fromTo(item, { opacity: 0, y: 40 }, {
+    opacity: 1, y: 0, duration: 0.8, delay: (i % 3) * 0.1, ease: 'power3.out',
+    scrollTrigger: { trigger: item, start: 'top 88%' }
+  });
+});
+
+/* ===== SERVICE CARD 3D TILT ===== */
+document.querySelectorAll('.service-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    gsap.to(card, { rotationY: x * 8, rotationX: -y * 8, transformPerspective: 800, duration: 0.3, ease: 'power2.out' });
+  });
+  card.addEventListener('mouseleave', () => {
+    gsap.to(card, { rotationY: 0, rotationX: 0, duration: 0.5, ease: 'power3.out' });
+  });
+});
+
+/* ===== TESTIMONIAL CAROUSEL ===== */
+const track = document.getElementById('testi-track');
+let tesCurr = 0;
+const tesCards = document.querySelectorAll('.testi-card');
+const tesCardW = () => tesCards[0].offsetWidth + 28;
+function moveCarousel(dir) {
+  tesCurr = Math.max(0, Math.min(tesCards.length - 1, tesCurr + dir));
+  gsap.to(track, { x: -tesCurr * tesCardW(), duration: 0.6, ease: 'power3.out' });
+}
+document.getElementById('testi-prev').addEventListener('click', () => moveCarousel(-1));
+document.getElementById('testi-next').addEventListener('click', () => moveCarousel(1));
+// Auto-play
+let tesInterval = setInterval(() => moveCarousel(tesCurr >= tesCards.length - 1 ? -(tesCards.length - 1) : 1), 5000);
+track.addEventListener('mouseenter', () => clearInterval(tesInterval));
+track.addEventListener('mouseleave', () => {
+  tesInterval = setInterval(() => moveCarousel(tesCurr >= tesCards.length - 1 ? -(tesCards.length - 1) : 1), 5000);
+});
+
+/* ===== PROJECT FILTER ===== */
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.project-card').forEach(card => {
+      const show = filter === 'all' || card.dataset.cat === filter;
+      gsap.to(card, { opacity: show ? 1 : 0.15, scale: show ? 1 : 0.97, duration: 0.4 });
+    });
+  });
+});
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) lenis.scrollTo(target, { offset: -80, duration: 1.4 });
+  });
+});
+document.querySelectorAll('.btn-primary, .btn-outline, .nav-cta').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const rect = btn.getBoundingClientRect();
+    const dx = e.clientX - (rect.left + rect.width / 2);
+    const dy = e.clientY - (rect.top + rect.height / 2);
+    gsap.to(btn, { x: dx * 0.25, y: dy * 0.25, duration: 0.3, ease: 'power2.out' });
+  });
+  btn.addEventListener('mouseleave', () => {
+    gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.4)' });
+  });
+});
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    if (window.scrollY >= section.offsetTop - 200) current = section.id;
+  });
+  navLinks.forEach(link => {
+    link.style.color = link.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+  });
+});
+
+/* ===== FORM SUBMIT ===== */
+document.querySelector('.form-submit').addEventListener('click', function() {
+  const btn = this;
+  btn.textContent = 'Sending…';
+  setTimeout(() => {
+    btn.textContent = 'Inquiry Sent ✓';
+    btn.style.background = '#4caf50';
+    setTimeout(() => {
+      btn.textContent = 'Send Inquiry →';
+      btn.style.background = '';
+    }, 3000);
+  }, 1200);
+});
+</script>
+</body>
+</html>
